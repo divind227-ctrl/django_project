@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commercial Bid Data</title>
+    <style>
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 40px;
+        }
+        th, td {
+            border: 1px solid #555;
+            padding: 8px;
+        }
+        th {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Commercial Bid - Supplier Data</h1>
+
+<h3>Overall Total: {{ overall_total }}</h3>
+
+{% for supplier, details in suppliers.items %}
+
+    <h2>{{ supplier }}</h2>
+    <p><b>Total for Supplier:</b> {{ details.supplier_total }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Revision</th>
+                <th>Creation</th>
+                <th>Tables</th>
+                <th>Revision Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for rev in details.revisions %}
+            <tr>
+                <td>{{ rev.revision }}</td>
+                <td>{{ rev.creation }}</td>
+
+                <td>
+                    <ul>
+                        {% for table_id, value in rev.tables.items %}
+                            <li>{{ table_id }} : {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+
+                <td>{{ rev.revision_total }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endfor %}
+
+</body>
+</html>
